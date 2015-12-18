@@ -1,12 +1,13 @@
 {
   "name": "xg-csshint",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "csshint",
   "main": "index.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json"
   },
   "keywords": [
+    "postcss-plugin",
     "csshint",
     "xg"
   ],
