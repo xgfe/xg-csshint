@@ -1,0 +1,6 @@
+div {
+    transition: all 1s linear;
+    transition: width 2s ease-in-out;
+    transition-property: all;
+    transition-property: ALl;
+}

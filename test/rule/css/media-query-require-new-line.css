@@ -1,0 +1,18 @@
+@media screen and (device-height:800px){
+    p {
+        font-size: 12px;
+    }
+}
+
+@media screen and (device-height: 900px), (device-width: 1000px) {
+    p {
+        font-size: 12px;
+    }
+}
+
+@media screen and (device-height: 900px),
+(device-width: 1000px) {
+    p {
+        font-size: 12px;
+    }
+}
