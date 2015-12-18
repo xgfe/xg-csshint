@@ -1,0 +1,3 @@
+input {
+    width: expression(this.offsetWidth > 750 ? '12px' : '20px');
+}

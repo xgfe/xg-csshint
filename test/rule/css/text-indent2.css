@@ -1,0 +1,13 @@
+@media screen {
+    div {
+        font-size: 12px;
+    }
+    @keyframes name {
+        from {
+            width: 100px;
+        }
+        to {
+           width: 200px;
+        }
+    }
+}
