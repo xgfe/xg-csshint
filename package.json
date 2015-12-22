@@ -1,6 +1,6 @@
 {
   "name": "xg-csshint",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "csshint",
   "main": "index.js",
   "scripts": {
@@ -15,12 +15,21 @@
     "xg-csshint": "./bin/xg-csshint"
   },
   "author": "scliuyang",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "chalk": "^1.1.1",
     "glob": "^6.0.1",
     "grunt": "^0.4.5",
     "grunt-contrib-watch": "^0.6.1",
     "postcss": "^5.0.12"
+  },
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "glob": "^6.0.1",
+    "postcss": "^5.0.12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xgfe/xg-csshint"
   }
 }

@@ -28,7 +28,7 @@ describe('line-of-legth',function(){
     it('error msg',function(){
         var cssString='html {\n    background: url(aVeryVeryVeryLongUrlIsPlacedHereaVeryVeryVeryLongUrlIsPlacedHereaVeryVeryVeryLongUrlIsPlacedHere) repeat;\n}';
         var messages=csshint(cssString);
-        expect(messages[0].text).toBe('A line of not more than 80 characters');
+        expect(messages[0].text).toBe('A line of no more than 80 characters');
     });
 
     it('error type',function(){

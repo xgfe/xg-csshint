@@ -1,6 +1,6 @@
-html{
+html {
     font-family: Arial, sans-serif,微软雅黑;
     transition-property: width,
-    height;
+    height,  margin;
     margin: 10px;
 }

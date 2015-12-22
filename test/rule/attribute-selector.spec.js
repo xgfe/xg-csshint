@@ -41,4 +41,11 @@ describe('attribute-selector',function(){
         var messages=csshint(cssString);
         expect(messages[0].type).toEqual('error');
     })
+
+    it('right line&column',function(){
+        var cssString=" article[character=juliet] {\n    voice-family: \"Vivien Leigh\", victoria, female;\n}";
+        var messages=csshint(cssString);
+        expect(messages[0].line).toBe(1);
+        expect(messages[0].column).toBe(20);
+    })
 });

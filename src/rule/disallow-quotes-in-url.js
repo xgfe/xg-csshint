@@ -3,6 +3,7 @@
  */
 
 var postcss=require('postcss');
+var utils = require("../utils")
 var name='disallow-quotes-in-url';
 var msg='The paths through the url function without quotation marks';
 var errorType='error'
@@ -13,10 +14,11 @@ module.exports=postcss.plugin(name,function(opt){
         css.walkDecls(function(decl){
             var value = decl.value;
             var urlPath;
+
             while(urlPath=getUrlValue.exec(value)){
-                //只报一次错
-                result.warn(msg,{node:decl,type:errorType});
-                break;
+                var before =decl.prop+ decl.raws.between + value.substring(0,urlPath.index);
+                var position = utils.getLineAndColumn(decl.raws.before.replace(/\n/,"")+before,decl.source.start);
+                result.warn(msg,{node:decl,type:errorType,content:before+urlPath[0],line:position.line,column:position.column});
             }
         });
    }

@@ -14,10 +14,11 @@ describe('decl-comma',function(){
         var content = utils.getContent(fileP);
         var messages = getMessageByPulgin(csshint(content,fileP),'decl-comma');
 
-        expect(messages.length).toBe(1);
+        expect(messages.length).toBe(2);
         expect(messages[0].type).toEqual('error');
         expect(messages[0].text).toEqual('Single attribute comma must have a space');
     });
+
 });
 
 

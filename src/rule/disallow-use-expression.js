@@ -12,7 +12,8 @@ module.exports = postcss.plugin(name, function (opt) {
         var isExpression=/expression\(/i;
         css.walkDecls(function(decl){
             if(isExpression.test(decl.value)){
-                result.warn(msg,{node:decl,type:errorType});
+                var cssString = decl.toString();
+                result.warn(msg,{node:decl,type:errorType,content:cssString});
             }
         });
     }

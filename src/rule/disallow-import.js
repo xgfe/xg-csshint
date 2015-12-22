@@ -12,7 +12,8 @@ module.exports = postcss.plugin(name, function (opt) {
         css.walkAtRules(function(atr){
 
             if(atr.name == 'import'){
-                result.warn(msg,{type:errorType,node:atr});
+                var content = atr.toString();
+                result.warn(msg,{type:errorType,node:atr,content:content});
             }
         });
     }

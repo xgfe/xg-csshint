@@ -18,7 +18,10 @@ module.exports = postcss.plugin(name, function (opt) {
 
                 var fontSzie=match[1];
                 if(fontSzie<12){
-                    result.warn(msg,{node:decl,type:errorType});
+                    var content = decl.toString();
+                    var column = decl.source.start.column + decl.prop.length + decl.raws.between.length;
+
+                    result.warn(msg,{node:decl,type:errorType,content:content,column: column});
                 }
             }
         })

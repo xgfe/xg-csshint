@@ -14,8 +14,13 @@ module.exports = postcss.plugin(name, function (opt) {
 
         css.walkDecls(function(decl){
             var value = decl.value;
-            if(canAbbreviated.test(value)){
-                result.warn(msg,{node:decl,type:errorType});
+            var match = value.match(canAbbreviated);
+            if(match){
+
+                var cssString=decl.prop + decl.raws.between + value.substring(0,match.index);
+                var column = cssString.length + decl.source.start.column;
+                //console.log(cssString);
+                result.warn(msg,{node:decl,type:errorType,content:cssString+match[0],column:column});
             }
         })
     }

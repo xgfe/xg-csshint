@@ -5,7 +5,7 @@
 
 var postcss=require('postcss');
 var name='line-of-length';
-var msg='A line of not more than 80 characters';
+var msg='A line of no more than 80 characters';
 var errorType='error';
 var maxLineNumber=80;
 module.exports=postcss.plugin(name,function(opt){
@@ -19,7 +19,10 @@ module.exports=postcss.plugin(name,function(opt){
                 line = line.trim(); //去掉首尾空格，因为判断是否是多属性的依据是里面有没有空格
                if(line.length>maxLineNumber && line.indexOf(' ')!==-1){
                    //一行超过80,并且是多个属性
-                   result.warn(msg,{type:errorType,node:decl});
+
+                   var content = decl.toString();
+
+                   result.warn(msg,{type:errorType,node:decl,content: content});
                }
             });
         });

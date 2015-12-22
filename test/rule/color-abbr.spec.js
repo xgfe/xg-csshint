@@ -27,4 +27,10 @@ describe("color-abbr", function () {
     it('error type',function(){
         expect(this.messages[0].type).toEqual('error');
     })
+
+    it('right line&column',function(){
+        var message = this.messages[0];
+        expect(message.line).toBe(3);
+        expect(message.column).toBe(17);
+    })
 });

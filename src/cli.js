@@ -46,14 +46,22 @@ function parseFiles(files) {
 
         messages[fileName] = parse(cssContent, filePath);
     });
+    var errorNumber=0;
+    var warningNumber=0;
     for (var file in messages) {
         if (messages.hasOwnProperty(file)) {
-            console.log(file);
+
+            if(messages[file].length)    console.log(file);
+
             messages[file].forEach(function (message) {
+                if(message.type.toLowerCase() == 'error') errorNumber++;
+                else if(message.type.toLowerCase() == 'warning') warningNumber++;
                 console.log(messagesToString(message));
             });
         }
     }
+
+    console.log('\n---errors:%d,warnings:%d---',errorNumber,warningNumber);
 }
 /**
  * 格式化message对象，提供给console输出
@@ -65,13 +73,13 @@ function messagesToString(message) {
     var text = chalk.gray("'" + message.text + "'");
     var line = message.line;
     var column = message.column;
-
+    var content =chalk.magenta( message.content );
     if (type == 'ERROR') {
         type = chalk.bgRed(type);
         type = chalk.white(type);
     }
 
-    return type + " Line:" + line + ", Colum:" + column + " " + text;
+    return type + " Line:" + line + ", Colum:" + column + " "+content+" "+ text;
 }
 
 function getFileList(userPath) {

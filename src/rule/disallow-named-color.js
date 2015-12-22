@@ -15,7 +15,8 @@ module.exports = postcss.plugin(name, function (opt) {
             var parts = postcss.list.space(decl.value);
             for(var i= 0,part;part=parts[i++];){
                 if(colors.hasOwnProperty(part)){
-                    result.warn(msg,{node:decl,type:errorType});
+                    var content = decl.toString();
+                    result.warn(msg,{node:decl,type:errorType,content:content});
                 }
             }
         });

@@ -4,6 +4,7 @@
 "use strict"
 
 var postcss=require('postcss');
+var chalk = require("chalk");
 var name='a-line-of-decl';
 var msg='Attribute must be a new line';
 var errorType='error';
@@ -16,7 +17,9 @@ module.exports=postcss.plugin(name,function(opt){
         css.walkDecls(function(decl){
             var before=decl.raws.before;
             if(!isNewLine.test(before)){
-                result.warn(msg,{node:decl,type:errorType});
+
+                var cssString = decl.toString();
+                result.warn(msg,{node:decl,type:errorType,content:cssString});
             }
         });
     }

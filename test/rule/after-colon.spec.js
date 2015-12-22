@@ -19,6 +19,15 @@ describe('after-colon',function(){
         expect(messages[0].type).toEqual('error');
         expect(messages[0].text).toEqual('After the colon must have a space');
     });
+
+    it('right line&column',function(){
+        var fileP=path.join(cssPath,'after-colon-before-prop-not-space.css');
+        var content = utils.getContent(fileP);
+        var message = getMessageByPulgin(csshint(content,fileP),'after-colon')[0];
+
+        expect(message.line).toBe(3);
+        expect(message.column).toBe(12);
+    })
 });
 
 
