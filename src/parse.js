@@ -38,6 +38,6 @@ function getPlugins() {
 //var cssString="article {\n    quotes: '\"' '\"';\n}";
 
 //var cssString=utils.getContent(path.resolve("../test/rule/css/unifying-font-family-case-sensitive.css"));
-//parse(cssString,path.resolve('../test/rule/css/bom3.css'));
+//parse(cssString,path.resolve('../test/rule/css/bom3.css'))
 
 module.exports = parse;
