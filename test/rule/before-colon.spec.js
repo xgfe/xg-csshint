@@ -19,6 +19,14 @@ describe('before-colon',function(){
         expect(messages[0].type).toEqual('error');
         expect(messages[0].text).toEqual('There must be nothing in front of the colon');
     });
+
+    it('right line&column',function(){
+        var fileP=path.join(cssPath,'after-colon-before-prop-not-space.css');
+        var content = utils.getContent(fileP);
+        var message = getMessageByPulgin(csshint(content,fileP),'before-colon')[0];
+        expect(message.line).toBe(4);
+        expect(message.column).toBe(12);
+    })
 });
 
 

@@ -18,7 +18,10 @@ module.exports=postcss.plugin(name,function(opt){
             var lastDecl = rule.last;
             //如果最后一行是注释，postcss也会解析成未加`;`
             if(lastDecl && lastDecl.type!=='comment'){
-                result.warn(msg,{node:rule,type:errorType});
+                var content = lastDecl.toString();
+                var line = lastDecl.source.start.line;
+                var column = lastDecl.source.start.column + content.length;
+                result.warn(msg,{node:rule,type:errorType,content:content,line:line,column:column});
             }
         });
     }

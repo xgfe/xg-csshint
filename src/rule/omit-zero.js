@@ -11,9 +11,14 @@ module.exports = postcss.plugin(name, function (opt) {
         var omitZeroReg=/\b0\./;
         css.walkDecls(function (decl) {
             var valueList = postcss.list.space( decl.value );
+
             for(var i= 0,value;value=valueList[i++];)
                 if(omitZeroReg.test(value)){
-                    result.warn(msg,{node:decl,type:errorType});
+
+                    var content = decl.toString();
+                    var column = content.indexOf(value)+decl.source.start.column;
+
+                    result.warn(msg,{node:decl,type:errorType,content:content,column:column});
                 }
         });
     }

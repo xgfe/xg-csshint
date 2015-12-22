@@ -31,4 +31,11 @@ describe('a-line-of-decl', function () {
         var messages=csshint(cssString);
         expect(messages[0].type).toBe('error');
     });
+
+    it('error type',function(){
+        var cssString = "html {\n    font-size: 14px;\t    color: #000;\n}";
+        var messages=csshint(cssString);
+        expect(messages[0].line).toBe(2);
+        expect(messages[0].column).toBe(26);
+    });
 });

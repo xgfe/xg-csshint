@@ -17,7 +17,9 @@ module.exports=postcss.plugin(name,function(opt){
                 //这里因为postcss不会提取只有一个空格的important，所以decl.raws.important有值就证明不正确
                 var importantString=decl.raws.important;
                 if(importantString){
-                    result.warn(msg,{type:errorType,node:decl});
+                    var column = decl.source.end.column - 10;//10是`!important`的长度
+                    var content = decl.toString();
+                    result.warn(msg,{type:errorType,node:decl,content: content,column: column});
                 }
             }
         });

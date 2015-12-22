@@ -13,7 +13,9 @@ module.exports=postcss.plugin(name,function(opt){
         css.walkDecls(function(decl){
             var after=decl.raws.between.split(':')[1];
             if(after!==' '){
-                result.warn(msg,{type:errorType,node:decl})
+                var cssString = decl.toString();
+                var column = decl.source.start.column + decl.prop.length + decl.raws.between.length - after.length;//计算`:`的具体位置
+                result.warn(msg,{type:errorType,node:decl,content:cssString,column:column})
             }
         });
     }

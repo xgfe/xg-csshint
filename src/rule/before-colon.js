@@ -13,7 +13,9 @@ module.exports=postcss.plugin(name,function(opt){
         css.walkDecls(function(decl){
            var before=decl.raws.between.split(':')[0];
             if(before!==''){
-                result.warn(msg,{type:errorType,node:decl})
+                var cssString = decl.toString();
+                var column = decl.prop.length + decl.source.start.column;
+                result.warn(msg,{type:errorType,node:decl,content:cssString,column:column})
             }
         });
     }

@@ -3,19 +3,32 @@
  */
 
 var postcss=require('postcss');
+var utils = require('../utils');
+
 var name='omit-unit';
 var msg='Unit of length is zero must be omitted';
 var errorType='error';
 
 module.exports=postcss.plugin(name,function(opt){
     return function(css,result){
-        var notOmitUnit=/\b0[a-zA-Z]+?\b/;//找出0px,0rem,0xxx
+        var notOmitUnit=/\b0[a-zA-Z]+?\b/g;//找出0px,0rem,0xxx
         css.walkDecls(function(decl){
             var value = decl.value;
+            var beforeString = decl.raws.before.replace(/\n/,"")+decl.prop+decl.raws.between;
+            var noOmit;
+            while(noOmit=notOmitUnit.exec(value)){
 
-            if(notOmitUnit.test(value)){
-                result.warn(msg,{node:decl,type:errorType});
+                var cssString = beforeString+value.substring(0,noOmit.index);
+                var position = utils.getLineAndColumn(cssString,decl.source.start);
+                var content = cssString + noOmit[0];
+
+                result.warn(msg,{node:decl,type:errorType,content:content,line:position.line,column:position.column});
             }
+
+            //if(notOmitUnit.test(value)){
+            //    var cssString = decl.toString();
+            //    result.warn(msg,{node:decl,type:errorType,content:cssString});
+            //}
         })
     }
 });

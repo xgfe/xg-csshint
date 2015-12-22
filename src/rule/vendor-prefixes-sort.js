@@ -60,8 +60,8 @@ function checkSort(list,result){
     for(var i= 1,l;l=list[i++];){
         var prop= l.prop;
         if(prop.length>len){
-            result.warn(msg,{node:l,type:errorType});
-            return true;
+            var content = l.toString();
+            result.warn(msg,{node:l,type:errorType,content:content});
         }else{
             len=prop.length;
         }
@@ -81,8 +81,8 @@ function colonSort(list,result){
         if(!firstColonIndex){
             firstColonIndex=colonIndex;
         }else if(firstColonIndex!==colonIndex){
-            result.warn(msg,{node:l,type:errorType});
-            return true;
+            var content = l.toString();
+            result.warn(msg,{node:l,type:errorType,content:content});
         }
     }
     return false;

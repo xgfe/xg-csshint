@@ -14,7 +14,11 @@ module.exports = postcss.plugin(name, function (opt) {
             if (decl.prop == 'background-position') {
                 var parts = postcss.list.space(decl.value);
                 if (parts.length < 2) {
-                    result.warn(msg,{node:decl,type:errorType});
+
+                    var content = decl.toString();
+                    var column = decl.source.start.column + decl.prop.length + decl.raws.between.length;
+
+                    result.warn(msg,{node:decl,type:errorType,content: content,column: column});
                 }
             }
         });

@@ -35,9 +35,9 @@ function getPlugins() {
 }
 
 
-var cssString='article[character="juliet"] {\n    voice-family: "Vivien Leigh", victoria, female;\n}';
+//var cssString="article {\n    quotes: '\"' '\"';\n}";
 
-//var cssString=utils.getContent(path.resolve("../test/rule/css/text-indent2.css"));
-parse(cssString,path.resolve('../test/rule/css/bom3.css'));
+//var cssString=utils.getContent(path.resolve("../test/rule/css/unifying-font-family-case-sensitive.css"));
+//parse(cssString,path.resolve('../test/rule/css/bom3.css'));
 
 module.exports = parse;
