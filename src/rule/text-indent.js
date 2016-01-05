@@ -64,6 +64,7 @@ function dealRules(atRules, rule, result) {
                 for (var i = 0; i < index; i++) {
                     shouldIndentStr += shouldIndent;
                 }
+                
                 if (beforeStr !== '\n' + shouldIndentStr) {
                     var content = rule.raws.before.replace(/\n/,"")+rule.selector;
                     result.warn(msg, {node: rule, type: errorType, content: content});

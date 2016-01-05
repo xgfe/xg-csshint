@@ -16,7 +16,7 @@ module.exports=postcss.plugin(name,function(opt){
 
             if(between!==' '){//只有一个空格
 
-                var cssString = rule.raws.before.replace(/\n/,"") + rule.selector
+                var cssString = rule.raws.before.replace(/\n/,"") + rule.selector;
                 var position = utils.getLineAndColumn(cssString,rule.source.start);
                 var content= cssString + rule.raws.between + '{';
                 result.warn(msg,{type:errorType,node:rule,content:content,line:position.line,column:position.column});

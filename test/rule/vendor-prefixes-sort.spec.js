@@ -17,7 +17,8 @@ describe("vendor-prefixes-sort", function () {
     });
 
     it('messages should be right', function () {
-        expect(this.messages.length).toBe(2);
+
+        expect(this.messages.length).toBe(3);
     });
 
     it('messages text should be right', function () {

@@ -1,4 +1,3 @@
 {
-  "files":["test/**/*.css"],
-  "ignore":""
+  "files":["test/**/*.css"]
 }

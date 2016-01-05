@@ -23,3 +23,35 @@ exports.getLineAndColumn=function(string,start){
     var column =  rows[rows.length-1].length+1;
     return {line:line,column:column};
 }
+
+/**
+ * 合并函数
+ * @param to 被合并对象
+ * @param form 来源
+ */
+exports.merage=function(to,form){
+    var value;
+    for (var k in form) {
+        if (form.hasOwnProperty(k)) {
+            value = form[k];
+            if (exports.isObject(value)) {
+                to[k] =to[k]|| {};
+            } else if (exports.isArray(value)) {
+                to[k] =to[k]|| [];
+            }else{
+                //非数组和对象不处理
+                to[k]=form[k];
+                continue;
+            }
+            arguments.callee(to[k], form[k], true);
+        }
+    }
+    return to;
+}
+
+var list = ['Arguments', 'Object', 'Array', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'];
+list.forEach(function (name) {
+    exports['is' + name] = function (obj) {
+        return toString.call(obj) === '[object ' + name + ']';
+    };
+})
