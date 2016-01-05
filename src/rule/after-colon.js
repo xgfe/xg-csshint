@@ -6,7 +6,8 @@
 var postcss=require('postcss');
 var name='after-colon';
 var msg='After the colon must have a space';
-var errorType='error';
+var config = global.config;
+var errorLevel=config[name].level;
 
 module.exports=postcss.plugin(name,function(opt){
     return function(css,result){
@@ -15,7 +16,7 @@ module.exports=postcss.plugin(name,function(opt){
             if(after!==' '){
                 var cssString = decl.toString();
                 var column = decl.source.start.column + decl.prop.length + decl.raws.between.length - after.length;//计算`:`的具体位置
-                result.warn(msg,{type:errorType,node:decl,content:cssString,column:column})
+                result.warn(msg,{level:errorLevel,node:decl,content:cssString,column:column})
             }
         });
     }

@@ -1,11 +1,12 @@
 /**
  *  [强制] 文本内容必须用双引号包围。
- *  done 报错加入需要仔细考虑
+ *
  */
 var postcss = require('postcss');
 var name = 'content-double-quotation';
 var msg = 'Surrounded by text content must be enclosed in double quotation marks';
-var errorType = 'error';
+var config = global.config;
+var errorLevel=config[name].level;
 
 module.exports = postcss.plugin(name, function (opt) {
     return function (css, result) {
@@ -30,7 +31,7 @@ module.exports = postcss.plugin(name, function (opt) {
 
                             var line = raws.length + decl.source.start.line-1;
                             var column = raws[raws.length-1].length+1;
-                            result.warn(msg, {node: decl, type: errorType,content:content,line:line,column:column});
+                            result.warn(msg, {node: decl, level:errorLevel,content:content,line:line,column:column});
 
                         }
                     }
@@ -40,7 +41,7 @@ module.exports = postcss.plugin(name, function (opt) {
                 if (value[0] !== '"' || value[value.length - 1] !== '"') {
                     var cssString = decl.toString();
                     var column = (decl.prop+decl.raws.between).length+decl.source.start.column;
-                    result.warn(msg, {node: decl, type: errorType,content:cssString,column:column});
+                    result.warn(msg, {node: decl, level:errorLevel,content:cssString,column:column});
                 }
             }
         });

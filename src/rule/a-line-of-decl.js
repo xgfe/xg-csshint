@@ -7,7 +7,8 @@ var postcss=require('postcss');
 var chalk = require("chalk");
 var name='a-line-of-decl';
 var msg='Attribute must be a new line';
-var errorType='error';
+var config = global.config;
+var errorLevel=config[name].level;
 
 module.exports=postcss.plugin(name,function(opt){
     return function(css,result){
@@ -19,7 +20,7 @@ module.exports=postcss.plugin(name,function(opt){
             if(!isNewLine.test(before)){
 
                 var cssString = decl.toString();
-                result.warn(msg,{node:decl,type:errorType,content:cssString});
+                result.warn(msg,{node:decl,level:errorLevel,content:cssString});
             }
         });
     }

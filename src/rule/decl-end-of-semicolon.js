@@ -4,7 +4,8 @@
 var postcss=require('postcss');
 var name='decl-end-of-semicolon';
 var msg='Attributes must end with a semicolon';
-var errorType='error';
+var config = global.config;
+var errorLevel=config[name].level;
 
 module.exports=postcss.plugin(name,function(opt){
     return function(css,result){
@@ -21,7 +22,7 @@ module.exports=postcss.plugin(name,function(opt){
                 var content = lastDecl.toString();
                 var line = lastDecl.source.start.line;
                 var column = lastDecl.source.start.column + content.length;
-                result.warn(msg,{node:rule,type:errorType,content:content,line:line,column:column});
+                result.warn(msg,{node:rule,level: errorLevel,content:content,line:line,column:column});
             }
         });
     }

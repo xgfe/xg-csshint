@@ -6,7 +6,8 @@
 var postcss=require('postcss');
 var name='important';
 var msg='Must have a space before the !important';
-var errorType='error';
+var config = global.config;
+var errorLevel=config[name].level;
 
 module.exports=postcss.plugin(name,function(opt){
     return function(css,result){
@@ -19,7 +20,7 @@ module.exports=postcss.plugin(name,function(opt){
                 if(importantString){
                     var column = decl.source.end.column - 10;//10是`!important`的长度
                     var content = decl.toString();
-                    result.warn(msg,{type:errorType,node:decl,content: content,column: column});
+                    result.warn(msg,{level: errorLevel,node:decl,content: content,column: column});
                 }
             }
         });

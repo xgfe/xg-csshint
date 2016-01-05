@@ -5,7 +5,8 @@
 var postcss = require('postcss');
 var name = 'horizontal-vertical-position';
 var msg = 'Must give the horizontal and vertical position';
-var errorType = 'error'
+var config = global.config;
+var errorLevel = config[name].level;
 
 module.exports = postcss.plugin(name, function (opt) {
     return function (css, result) {
@@ -18,8 +19,10 @@ module.exports = postcss.plugin(name, function (opt) {
                     var content = decl.toString();
                     var column = decl.source.start.column + decl.prop.length + decl.raws.between.length;
 
-                    result.warn(msg,{node:decl,type:errorType,content: content,column: column});
+                    result.warn(msg, {node: decl, level: errorLevel, content: content, column: column});
                 }
+
+
             }
         });
     }

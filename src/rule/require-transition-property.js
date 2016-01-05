@@ -6,7 +6,8 @@ var postcss = require('postcss');
 var utils = require("../utils");
 var name = 'require-transition-property';
 var msg = 'Use the transition should be specified the transition-property';
-var errorType = 'error'
+var config = global.config;
+var errorLevel=config[name].level;
 
 module.exports = postcss.plugin(name, function (opt) {
     return function (css, result) {
@@ -19,7 +20,7 @@ module.exports = postcss.plugin(name, function (opt) {
                     var cssString = beforeString + value.substring(0,index);
                     var position = utils.getLineAndColumn(cssString,decl.source.start);
                     var content = decl.toString();
-                    result.warn(msg, {node: decl, type: errorType,line:position.line,column:position.column,content:content});
+                    result.warn(msg, {node: decl, level: errorLevel,line:position.line,column:position.column,content:content});
                 }
             }
         })

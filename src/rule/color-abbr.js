@@ -5,7 +5,8 @@
 var postcss = require('postcss');
 var name = 'color-abbr';
 var msg = 'The color value can be abbreviated, must use abbreviations';
-var errorType = 'error'
+var config = global.config;
+var errorLevel=config[name].level;
 
 module.exports = postcss.plugin(name, function (opt) {
     return function (css, result) {
@@ -19,8 +20,8 @@ module.exports = postcss.plugin(name, function (opt) {
 
                 var cssString=decl.prop + decl.raws.between + value.substring(0,match.index);
                 var column = cssString.length + decl.source.start.column;
-                //console.log(cssString);
-                result.warn(msg,{node:decl,type:errorType,content:cssString+match[0],column:column});
+
+                result.warn(msg,{node:decl,level:errorLevel,content:cssString+match[0],column:column});
             }
         })
     }

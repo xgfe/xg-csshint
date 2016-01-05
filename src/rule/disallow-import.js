@@ -5,7 +5,8 @@
 var postcss = require('postcss');
 var name = 'disallow-import';
 var msg = 'Do not use the import';
-var errorType = 'error'
+var config = global.config;
+var errorLevel=config[name].level;
 
 module.exports = postcss.plugin(name, function (opt) {
     return function (css, result) {
@@ -13,7 +14,7 @@ module.exports = postcss.plugin(name, function (opt) {
 
             if(atr.name == 'import'){
                 var content = atr.toString();
-                result.warn(msg,{type:errorType,node:atr,content:content});
+                result.warn(msg,{level: errorLevel,node:atr,content:content});
             }
         });
     }

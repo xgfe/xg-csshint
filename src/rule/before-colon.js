@@ -6,7 +6,8 @@
 var postcss=require('postcss');
 var name='before-colon';
 var msg='There must be nothing in front of the colon';
-var errorType='error';
+var config = global.config;
+var errorLevel=config[name].level;
 
 module.exports=postcss.plugin(name,function(opt){
     return function(css,result){
@@ -15,7 +16,7 @@ module.exports=postcss.plugin(name,function(opt){
             if(before!==''){
                 var cssString = decl.toString();
                 var column = decl.prop.length + decl.source.start.column;
-                result.warn(msg,{type:errorType,node:decl,content:cssString,column:column})
+                result.warn(msg,{level:errorLevel,node:decl,content:cssString,column:column})
             }
         });
     }
