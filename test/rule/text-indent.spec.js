@@ -47,7 +47,7 @@ describe('text-indent',function(){
         var content = utils.getContent(fileP);
         var messages = csshint(content,fileP);
 
-        expect(messages.length).toBe(1)
+        expect(messages.length).toBe(3)
     })
 });
 

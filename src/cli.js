@@ -5,6 +5,7 @@
 var path = require("path");
 var glob = require('glob');
 var chalk = require("chalk");
+var fs = require("fs");
 
 var parse = require("./parse");
 var utils = require("./utils");
@@ -42,9 +43,8 @@ function parseFiles(files) {
     files.forEach(function (file) {
         var filePath = path.resolve(cwd, file);
         var cssContent = utils.getContent(filePath);
-        var fileName = path.basename(file);
 
-        messages[fileName] = parse(cssContent, filePath);
+        messages[file] = parse(cssContent, file);
     });
     var errorNumber=0;
     var warningNumber=0;
@@ -90,10 +90,15 @@ function getFileList(userPath) {
     else
         configPath = path.join(cwd, "xg-csshint.json");//默认配置文件
 
+    var defaultConfig = require("./config");
+    if(fs.existsSync(configPath))
+        var config = require(configPath);
+    else
+        var config={};
+    config=utils.merage(config,defaultConfig);
 
-    var config = require(configPath);
     var files = config['files'];
-    var ignore = config['ignore'] || "";
+    var ignore = config['ignore'];
 
     if (!Array.isArray(files)) files = [files];
     if (!Array.isArray(ignore)) ignore = [ignore];
