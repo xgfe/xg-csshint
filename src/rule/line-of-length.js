@@ -6,7 +6,8 @@
 var postcss=require('postcss');
 var name='line-of-length';
 var msg='A line of no more than 80 characters';
-var errorType='error';
+var config = global.config;
+var errorLevel=config[name].level;
 var maxLineNumber=80;
 module.exports=postcss.plugin(name,function(opt){
     return function(css,result){
@@ -22,7 +23,7 @@ module.exports=postcss.plugin(name,function(opt){
 
                    var content = decl.toString();
 
-                   result.warn(msg,{type:errorType,node:decl,content: content});
+                   result.warn(msg,{level: errorLevel,node:decl,content: content});
                }
             });
         });

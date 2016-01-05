@@ -7,7 +7,8 @@ var postcss=require('postcss');
 var utils = require("../utils");
 var name='selector-both-spaces';
 var msg='On both sides of the selector one and only one space';
-var errorType='error';
+var config = global.config;
+var errorLevel=config[name].level;
 
 module.exports=postcss.plugin(name,function(opt){
 
@@ -26,7 +27,7 @@ module.exports=postcss.plugin(name,function(opt){
                     var index = selector.indexOf(",",match.index);
                     index = index==-1?selector.length:index;
                     var content = selector.substring(0,index);
-                    result.warn(msg, {node: rule, type: errorType,line:position.line,column:position.column,content:content});
+                    result.warn(msg, {node: rule, level: errorLevel,line:position.line,column:position.column,content:content});
                 }
             }
 

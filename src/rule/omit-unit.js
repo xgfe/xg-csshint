@@ -7,7 +7,8 @@ var utils = require('../utils');
 
 var name='omit-unit';
 var msg='Unit of length is zero must be omitted';
-var errorType='error';
+var config = global.config;
+var errorLevel=config[name].level;
 
 module.exports=postcss.plugin(name,function(opt){
     return function(css,result){
@@ -22,12 +23,12 @@ module.exports=postcss.plugin(name,function(opt){
                 var position = utils.getLineAndColumn(cssString,decl.source.start);
                 var content = cssString + noOmit[0];
 
-                result.warn(msg,{node:decl,type:errorType,content:content,line:position.line,column:position.column});
+                result.warn(msg,{node:decl,level: errorLevel,content:content,line:position.line,column:position.column});
             }
 
             //if(notOmitUnit.test(value)){
             //    var cssString = decl.toString();
-            //    result.warn(msg,{node:decl,type:errorType,content:cssString});
+            //    result.warn(msg,{node:decl,level: errorLevel,content:cssString});
             //}
         })
     }

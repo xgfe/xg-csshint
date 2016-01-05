@@ -7,7 +7,8 @@ var colors = require('../color');
 
 var name = 'disallow-named-color';
 var msg = 'Color values using named color value is not allowed';
-var errorType = 'error'
+var config = global.config;
+var errorLevel=config[name].level;
 
 module.exports = postcss.plugin(name, function (opt) {
     return function (css, result) {
@@ -16,7 +17,7 @@ module.exports = postcss.plugin(name, function (opt) {
             for(var i= 0,part;part=parts[i++];){
                 if(colors.hasOwnProperty(part)){
                     var content = decl.toString();
-                    result.warn(msg,{node:decl,type:errorType,content:content});
+                    result.warn(msg,{node:decl,level: errorLevel,content:content});
                 }
             }
         });

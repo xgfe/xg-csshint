@@ -43,7 +43,7 @@ exports.merage=function(to,form){
                 to[k]=form[k];
                 continue;
             }
-            arguments.callee(to[k], form[k], true);
+            arguments.callee(to[k], form[k]);
         }
     }
     return to;
@@ -55,3 +55,11 @@ list.forEach(function (name) {
         return toString.call(obj) === '[object ' + name + ']';
     };
 })
+
+var form={
+    files:"text"
+}
+var to={
+    files:"xxxx",
+    ignore:'123'
+}

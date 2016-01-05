@@ -4,7 +4,8 @@
 var postcss = require('postcss');
 var name = 'omit-zero';
 var msg = 'When the value is between 0 and 1 decimal omit zero';
-var errorType = 'error';
+var config = global.config;
+var errorLevel=config[name].level;
 
 module.exports = postcss.plugin(name, function (opt) {
     return function (css, result) {
@@ -18,7 +19,7 @@ module.exports = postcss.plugin(name, function (opt) {
                     var content = decl.toString();
                     var column = content.indexOf(value)+decl.source.start.column;
 
-                    result.warn(msg,{node:decl,type:errorType,content:content,column:column});
+                    result.warn(msg,{node:decl,level: errorLevel,content:content,column:column});
                 }
         });
     }

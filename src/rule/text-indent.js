@@ -1,7 +1,7 @@
 /**
  * post-css-plugin
  * [强制] 使用 4 个空格做为一个缩进层级，不允许使用 2 个空格 或 tab 字符。
- * TODO 处理带私有前缀问题
+ * done 处理带私有前缀问题 私有前缀直接忽视
  */
 
 var postcss = require('postcss');
@@ -9,7 +9,8 @@ var prefixes = require('../prefixes');
 
 var name = 'text-indent';
 var msg = 'text-indent must be 4 space';
-var errorType = 'error';
+var config = global.config;
+var errorLevel=config[name].level;
 var shouldIndent = "    ";//缩进字符
 module.exports = postcss.plugin(name, function (opt) {
     return function (css, result) {
@@ -35,7 +36,7 @@ function dealRules(atRules, rule, result) {
         rule.walkDecls(function (decl) {
             var content = decl.raws.before.replace(/\n/,"")+decl.toString();
             if (!ignor(decl.prop) && decl.raws.before !== '\n' + shouldIndentStr) {
-                result.warn(msg, {node: decl, type: errorType, content: content});
+                result.warn(msg, {node: decl, level: errorLevel, content: content});
             }
         });
     } else {
@@ -51,7 +52,7 @@ function dealRules(atRules, rule, result) {
                 }
                 if (beforeStr !== '\n' + shouldIndentStr) {
                     var content = atr.raws.before.replace(/\n/,"") + "@" + atr.name + atr.raws.between + atr.params;
-                    result.warn(msg, {node: atr, type: errorType, content: content});
+                    result.warn(msg, {node: atr, level: errorLevel, content: content});
                 }
             }
 
@@ -67,7 +68,7 @@ function dealRules(atRules, rule, result) {
                 
                 if (beforeStr !== '\n' + shouldIndentStr) {
                     var content = rule.raws.before.replace(/\n/,"")+rule.selector;
-                    result.warn(msg, {node: rule, type: errorType, content: content});
+                    result.warn(msg, {node: rule, level: errorLevel, content: content});
                 }
                 index++;
                 //这里不用atrule 防止重复报错
@@ -79,7 +80,7 @@ function dealRules(atRules, rule, result) {
                     }
                     if (beforeStr !== '\n' + shouldIndentStr) {
                         var content = decl.raws.before.replace(/\n/,"")+decl.toString();
-                        result.warn(msg, {node: decl, type: errorType, content: content});
+                        result.warn(msg, {node: decl, level: errorLevel, content: content});
                     }
                 });
             }

@@ -8,7 +8,8 @@ var postcss=require('postcss');
 var utils = require("../utils");
 var name='decl-comma';
 var msg='Single attribute comma must have a space';
-var errorType='error';
+var config = global.config;
+var errorLevel=config[name].level;
 
 module.exports=postcss.plugin(name,function(opt){
     return function(css,result){
@@ -27,7 +28,7 @@ module.exports=postcss.plugin(name,function(opt){
 
                     var before = decl.raws.before.replace(/\n/,"");
                     var position = utils.getLineAndColumn(before+cssString,decl.source.start);
-                    result.warn(msg,{type:errorType,node:decl,content:cssString,line:position.line,column:position.column});
+                    result.warn(msg,{level: errorLevel,node:decl,content:cssString,line:position.line,column:position.column});
                 }
             }
 
@@ -40,7 +41,7 @@ module.exports=postcss.plugin(name,function(opt){
             //        var match=value.match(spaceReg)[0];
             //        if(match!=' '){
             //            //不是一个空格开头
-            //            result.warn(msg,{type:errorType,node:decl});
+            //            result.warn(msg,{level: errorLevel,node:decl});
             //        }
             //    }else{
             //        //TODO 换行后判断对齐问题

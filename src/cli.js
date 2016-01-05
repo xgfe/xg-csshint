@@ -22,17 +22,19 @@ module.exports = function (args) {
         return;
     }
 
-    //指定文件
-    if(args[0] === '-f'){
-        parseFiles([args[1]]);
-        return;
-    }
-
     //指定配置文件路径
     if (args[0] === '-p')
-        getFileList(args[1]);
+        loadConfig(args[1]);
     else
+        loadConfig();
+
+    //指定单个文件
+    if(args[0] === '-f'){
+        parseFiles([args[1]]);
+    }else{
         getFileList();
+    }
+
 
 
 
@@ -54,8 +56,8 @@ function parseFiles(files) {
             if(messages[file].length)    console.log(file);
 
             messages[file].forEach(function (message) {
-                if(message.type.toLowerCase() == 'error') errorNumber++;
-                else if(message.type.toLowerCase() == 'warning') warningNumber++;
+                if(message.level == 1) errorNumber++;
+                else if(message.level == 2) warningNumber++;
                 console.log(messagesToString(message));
             });
         }
@@ -68,35 +70,21 @@ function parseFiles(files) {
  * @param message
  */
 function messagesToString(message) {
-    var type = message.type.toUpperCase();
-
+    var level = message.level;
     var text = chalk.gray("'" + message.text + "'");
     var line = message.line;
     var column = message.column;
     var content =chalk.magenta( message.content );
-    if (type == 'ERROR') {
-        type = chalk.bgRed(type);
+    if (level == '1') {
+        var type = chalk.bgRed("ERROR");
         type = chalk.white(type);
     }
 
     return type + " Line:" + line + ", Colum:" + column + " "+content+" "+ text;
 }
 
-function getFileList(userPath) {
-    //加载配置文件，读取文件规则和忽略规则
-    var configPath
-    if(userPath)
-        configPath = path.resolve(cwd,userPath);
-    else
-        configPath = path.join(cwd, "xg-csshint.json");//默认配置文件
-
-    var defaultConfig = require("./config");
-    if(fs.existsSync(configPath))
-        var config = require(configPath);
-    else
-        var config={};
-    config=utils.merage(config,defaultConfig);
-
+function getFileList() {
+    var config = global.config;
     var files = config['files'];
     var ignore = config['ignore'];
 
@@ -115,4 +103,27 @@ function getFileList(userPath) {
             parseFiles(matchs);
         }
     })
+}
+/**
+ * 加载config
+ * @param userPath
+ */
+function loadConfig(userPath){
+
+    //加载配置文件，读取文件规则和忽略规则
+    var configPath
+    if(userPath)
+        configPath = path.resolve(cwd,userPath);
+    else
+        configPath = path.join(cwd, "xg-csshint.json");//默认配置文件
+
+    var defaultConfig = require("./config");
+    if(fs.existsSync(configPath))
+        var config = require(configPath);
+    else
+        var config={};
+
+    //将用户配置和默认配置合并，用户的配置优先级高
+    config=utils.merage(defaultConfig,config);
+    global.config=config;//每个规则都需要，用传递的话太麻烦了
 }

@@ -6,7 +6,8 @@ var utils = require('../utils');
 
 
 var name = 'selector-between-onespace';
-var errorType='error';
+var config = global.config;
+var errorLevel=config[name].level;
 var msg='brace after selector need one space before brace';
 
 module.exports=postcss.plugin(name,function(opt){
@@ -19,7 +20,7 @@ module.exports=postcss.plugin(name,function(opt){
                 var cssString = rule.raws.before.replace(/\n/,"") + rule.selector;
                 var position = utils.getLineAndColumn(cssString,rule.source.start);
                 var content= cssString + rule.raws.between + '{';
-                result.warn(msg,{type:errorType,node:rule,content:content,line:position.line,column:position.column});
+                result.warn(msg,{level: errorLevel,node:rule,content:content,line:position.line,column:position.column});
             }
         });
     }
