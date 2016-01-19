@@ -4,22 +4,31 @@
 var postcss = require('postcss');
 var name = 'omit-zero';
 var msg = 'When the value is between 0 and 1 decimal omit zero';
-var config = global.config;
-var errorLevel=config[name].level;
 
-module.exports = postcss.plugin(name, function (opt) {
+module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
-        var omitZeroReg=/\b0\./;
-        css.walkDecls(function (decl) {
-            var valueList = postcss.list.space( decl.value );
 
-            for(var i= 0,value;value=valueList[i++];)
-                if(omitZeroReg.test(value)){
+        var config = options.config;
+        var errorLevel = config[name].level;
+
+
+        var omitZeroReg = /\b0\./;
+        css.walkDecls(function (decl) {
+            var valueList = postcss.list.space(decl.value);
+
+            for (var i = 0, value; value = valueList[i++];)
+                if (omitZeroReg.test(value)) {
 
                     var content = decl.toString();
-                    var column = content.indexOf(value)+decl.source.start.column;
+                    var column = content.indexOf(value) + decl.source.start.column;
 
-                    result.warn(msg,{node:decl,level: errorLevel,content:content,column:column});
+                    result.warn(msg, {
+                        node: decl,
+                        level: errorLevel,
+                        content: content,
+                        column: column,
+
+                    });
                 }
         });
     }

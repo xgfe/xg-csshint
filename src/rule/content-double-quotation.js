@@ -5,15 +5,18 @@
 var postcss = require('postcss');
 var name = 'content-double-quotation';
 var msg = 'Surrounded by text content must be enclosed in double quotation marks';
-var config = global.config;
-var errorLevel=config[name].level;
 
-module.exports = postcss.plugin(name, function (opt) {
+module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
+
+        var config = options.config;
+        var errorLevel=config[name].level;
+
+
         css.walkDecls(function (decl) {
             var prop = decl.prop;
             var value = decl.value.trim();
-            var flags = false;
+
             //只有这几个属性需要双引号包围，每个单独处理
             if (prop == 'font-family') {
                 var values = value.split(',');
@@ -31,17 +34,29 @@ module.exports = postcss.plugin(name, function (opt) {
 
                             var line = raws.length + decl.source.start.line-1;
                             var column = raws[raws.length-1].length+1;
-                            result.warn(msg, {node: decl, level:errorLevel,content:content,line:line,column:column});
+                            result.warn(msg, {
+                                node: decl,
+                                level:errorLevel,
+                                content:content,
+                                line:line,
+                                column:column,
+
+                            });
 
                         }
                     }
-
                 }
             } else if (prop == 'content') {
                 if (value[0] !== '"' || value[value.length - 1] !== '"') {
                     var cssString = decl.toString();
                     var column = (decl.prop+decl.raws.between).length+decl.source.start.column;
-                    result.warn(msg, {node: decl, level:errorLevel,content:cssString,column:column});
+                    result.warn(msg, {
+                        node: decl,
+                        level:errorLevel,
+                        content:cssString,
+                        column:column,
+
+                    });
                 }
             }
         });

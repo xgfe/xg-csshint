@@ -6,30 +6,25 @@
 var csshint=require('../../src/parse');
 var utils=require('../../src/utils');
 var path=require('path');
-
+var options = {};
+ options.config = require('../../src/config');
 describe('text-indent',function(){
     var cssPath=path.join(__dirname,'css');
 
     it('ignore end-of-line',function(){
         var fileP=path.join(cssPath,'text-indent.css');
         var content = utils.getContent(fileP);
-        var messages = getMessageByPulgin(csshint(content,fileP),'text-indent');
+        var messages = getMessageByPulgin(csshint(content,fileP,options),'text-indent');
 
         expect(messages.length).toEqual(2);
     });
 
-    it('type is error',function(){
-        var fileP=path.join(cssPath,'text-indent.css');
-        var content = utils.getContent(fileP);
-        var messages = getMessageByPulgin(csshint(content,fileP),'text-indent');
 
-        expect(messages[0].type).toEqual('error');
-    });
 
     it('error message',function(){
         var fileP=path.join(cssPath,'text-indent.css');
         var content = utils.getContent(fileP);
-        var messages = getMessageByPulgin(csshint(content,fileP),'text-indent');
+        var messages = getMessageByPulgin(csshint(content,fileP,options),'text-indent');
 
         expect(messages[0].text).toEqual('text-indent must be 4 space');
     });
@@ -37,7 +32,7 @@ describe('text-indent',function(){
     it('tab not allowed',function(){
         var fileP=path.join(cssPath,'text-indent-tab.css');
         var content = utils.getContent(fileP);
-        var messages = getMessageByPulgin(csshint(content,fileP),'text-indent');
+        var messages = getMessageByPulgin(csshint(content,fileP,options),'text-indent');
 
         expect(messages.length).toBe(2);
     })
@@ -45,7 +40,7 @@ describe('text-indent',function(){
     it('atRule indent',function(){
         var fileP=path.join(cssPath,'text-indent2.css');
         var content = utils.getContent(fileP);
-        var messages = csshint(content,fileP);
+        var messages = csshint(content,fileP,options);
 
         expect(messages.length).toBe(3)
     })

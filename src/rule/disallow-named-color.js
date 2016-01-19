@@ -7,17 +7,26 @@ var colors = require('../color');
 
 var name = 'disallow-named-color';
 var msg = 'Color values using named color value is not allowed';
-var config = global.config;
-var errorLevel=config[name].level;
 
-module.exports = postcss.plugin(name, function (opt) {
+module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
+
+        var config = options.config;
+        var errorLevel=config[name].level;
+
+
         css.walkDecls(function(decl){
             var parts = postcss.list.space(decl.value);
             for(var i= 0,part;part=parts[i++];){
                 if(colors.hasOwnProperty(part)){
                     var content = decl.toString();
-                    result.warn(msg,{node:decl,level: errorLevel,content:content});
+                    //TODO 报错加入替换颜色
+                    result.warn(msg,{
+                        node:decl,
+                        level: errorLevel,
+                        content:content,
+
+                    });
                 }
             }
         });

@@ -6,11 +6,12 @@
 var postcss=require('postcss');
 var name='attribute-selector';
 var msg='Attribute selectors of values must be enclosed in double quotation marks';
-var config = global.config;
-var errorLevel=config[name].level;
 
-module.exports=postcss.plugin(name,function(opt){
+module.exports=postcss.plugin(name,function(options){
     return function(css,result){
+
+        var config = options.config;
+        var errorLevel=config[name].level;
 
         var getAttributeSelectorReg=/\[([\s\S]*?)\]/g;
         var doubleQuotationMarks=/^"[\s\S]*?"$/;
@@ -27,7 +28,14 @@ module.exports=postcss.plugin(name,function(opt){
                 var column = analysisResult.column;
 
                 if(!doubleQuotationMarks.test(attributeValue)){
-                    result.warn(msg,{node:rule,level:errorLevel,line:line,column:column,content:attributeString});
+                    result.warn(msg,{
+                        node:rule,
+                        level:errorLevel,
+                        line:line,
+                        column:column,
+                        content:attributeString,
+
+                    });
                 }
             }
         });
