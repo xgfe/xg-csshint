@@ -1,6 +1,6 @@
 {
   "name": "xg-csshint",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "csshint",
   "main": "src/index.js",
   "scripts": {
@@ -18,11 +18,8 @@
   "author": "scliuyang",
   "license": "MIT",
   "devDependencies": {
-    "chalk": "^1.1.1",
-    "glob": "^6.0.1",
     "grunt": "^0.4.5",
     "grunt-contrib-watch": "^0.6.1",
-    "postcss": "^5.0.12"
   },
   "dependencies": {
     "chalk": "^1.1.1",
