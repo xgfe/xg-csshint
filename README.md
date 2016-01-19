@@ -26,3 +26,30 @@ xg-csshint
 - -p 手动指定config文件
 - -f 指定需要检测的css路径(暂不支持路径)
 
+## 引入使用方法  
+
+```
+var fs = require("fs");
+var csshint = require("xg-csshint");
+var config = {};
+var cssParse=csshint(config);
+
+fs.readFile('./disallow-import.css',function(err,res){
+    var css=res.toString();
+    cssParse(css);
+    ...
+})
+```
+[规则参考](https://github.com/xgfe/xg-csshint/blob/master/src/config.js)
+返回一个messages数组
+
+```
+[{
+ text, //报错信息
+ line, //错误行
+ column, //错误列
+ level, //错误等级，1 error 2 warning
+ content, //css错误片段
+ plugin //规则名称
+}]
+```

@@ -7,15 +7,16 @@ var csshint=require('../../src/parse');
 var utils=require('../../src/utils');
 var path=require('path');
 var cssPath=path.join(__dirname,'css');
-
+var options = {};
+ options.config = require('../../src/config');
 describe('decl-comma',function(){
     it('one space',function(){
         var fileP=path.join(cssPath,'decl-comma.css');
         var content = utils.getContent(fileP);
-        var messages = getMessageByPulgin(csshint(content,fileP),'decl-comma');
+        var messages = getMessageByPulgin(csshint(content,fileP,options),'decl-comma');
 
         expect(messages.length).toBe(2);
-        expect(messages[0].type).toEqual('error');
+
         expect(messages[0].text).toEqual('Single attribute comma must have a space');
     });
 

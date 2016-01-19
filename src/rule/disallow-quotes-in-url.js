@@ -6,11 +6,14 @@ var postcss = require('postcss');
 var utils = require("../utils")
 var name = 'disallow-quotes-in-url';
 var msg = 'The paths through the url function without quotation marks';
-var config = global.config;
-var errorLevel = config[name].level;
 
-module.exports = postcss.plugin(name, function (opt) {
+module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
+
+        var config = options.config;
+        var errorLevel = config[name].level;
+
+
         var getUrlValue = /\burl\(['"][\s\S]+?['"]\)/g;//提取url('xxxx') url("xxx")
         css.walkDecls(function (decl) {
             var value = decl.value;
@@ -19,12 +22,14 @@ module.exports = postcss.plugin(name, function (opt) {
             while (urlPath = getUrlValue.exec(value)) {
                 var before = decl.prop + decl.raws.between + value.substring(0, urlPath.index);
                 var position = utils.getLineAndColumn(decl.raws.before.replace(/\n/, "") + before, decl.source.start);
+                var content = before + urlPath[0];
                 result.warn(msg, {
                     node: decl,
                     level: errorLevel,
-                    content: before + urlPath[0],
+                    content: content,
                     line: position.line,
-                    column: position.column
+                    column: position.column,
+
                 });
             }
         });

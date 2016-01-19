@@ -9,11 +9,15 @@ var prefixes = require('../prefixes');
 
 var name = 'text-indent';
 var msg = 'text-indent must be 4 space';
-var config = global.config;
-var errorLevel=config[name].level;
-var shouldIndent = "    ";//缩进字符
-module.exports = postcss.plugin(name, function (opt) {
+var errorLevel, textIndent;
+
+module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
+
+        var config = options.config;
+        errorLevel = config[name].level;
+        textIndent = config[name].textIndent;//缩进字符
+
         css.walkRules(function (rule) {
             var atRules = [];
             var parentRule = rule.parent;
@@ -31,12 +35,17 @@ function dealRules(atRules, rule, result) {
 
     if (atRules.length == 0) {
         //证明rule的startpos=1;
-        var shouldIndentStr = shouldIndent;
+        var textIndentStr = textIndent;
 
         rule.walkDecls(function (decl) {
-            var content = decl.raws.before.replace(/\n/,"")+decl.toString();
-            if (!ignor(decl.prop) && decl.raws.before !== '\n' + shouldIndentStr) {
-                result.warn(msg, {node: decl, level: errorLevel, content: content});
+            var content = decl.raws.before.replace(/\n/, "") + decl.toString();
+            if (!ignor(decl.prop) && decl.raws.before !== '\n' + textIndentStr) {
+                result.warn(msg, {
+                    node: decl,
+                    level: errorLevel,
+                    content: content,
+
+                });
             }
         });
     } else {
@@ -46,13 +55,18 @@ function dealRules(atRules, rule, result) {
 
             } else {
                 var beforeStr = atr.raws.before;
-                var shouldIndentStr = "";
+                var textIndentStr = "";
                 for (var i = 0; i < index; i++) {
-                    shouldIndentStr += shouldIndent;
+                    textIndentStr += textIndent;
                 }
-                if (beforeStr !== '\n' + shouldIndentStr) {
-                    var content = atr.raws.before.replace(/\n/,"") + "@" + atr.name + atr.raws.between + atr.params;
-                    result.warn(msg, {node: atr, level: errorLevel, content: content});
+                if (beforeStr !== '\n' + textIndentStr) {
+                    var content = atr.raws.before.replace(/\n/, "") + "@" + atr.name + atr.raws.between + atr.params;
+                    result.warn(msg, {
+                        node: atr,
+                        level: errorLevel,
+                        content: content,
+
+                    });
                 }
             }
 
@@ -61,26 +75,36 @@ function dealRules(atRules, rule, result) {
                 //处理每个decl
                 index++;
                 var beforeStr = rule.raws.before;
-                var shouldIndentStr = "";
+                var textIndentStr = "";
                 for (var i = 0; i < index; i++) {
-                    shouldIndentStr += shouldIndent;
+                    textIndentStr += textIndent;
                 }
-                
-                if (beforeStr !== '\n' + shouldIndentStr) {
-                    var content = rule.raws.before.replace(/\n/,"")+rule.selector;
-                    result.warn(msg, {node: rule, level: errorLevel, content: content});
+
+                if (beforeStr !== '\n' + textIndentStr) {
+                    var content = rule.raws.before.replace(/\n/, "") + rule.selector;
+                    result.warn(msg, {
+                        node: rule,
+                        level: errorLevel,
+                        content: content,
+
+                    });
                 }
                 index++;
                 //这里不用atrule 防止重复报错
                 rule.walkDecls(function (decl) {
                     var beforeStr = decl.raws.before;
-                    var shouldIndentStr = "";
+                    var textIndentStr = "";
                     for (var i = 0; i < index; i++) {
-                        shouldIndentStr += shouldIndent;
+                        textIndentStr += textIndent;
                     }
-                    if (beforeStr !== '\n' + shouldIndentStr) {
-                        var content = decl.raws.before.replace(/\n/,"")+decl.toString();
-                        result.warn(msg, {node: decl, level: errorLevel, content: content});
+                    if (beforeStr !== '\n' + textIndentStr) {
+                        var content = decl.raws.before.replace(/\n/, "") + decl.toString();
+                        result.warn(msg, {
+                            node: decl,
+                            level: errorLevel,
+                            content: content,
+
+                        });
                     }
                 });
             }

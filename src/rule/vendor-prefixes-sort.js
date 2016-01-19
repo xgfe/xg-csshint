@@ -5,11 +5,14 @@
 var postcss = require('postcss');
 var name = 'vendor-prefixes-sort';
 var msg = 'With private prefix attribute from long to short, according to the colon position alignment';
-var config = global.config;
-var errorLevel=config[name].level;
+var errorLevel;
 
-module.exports = postcss.plugin(name, function (opt) {
+module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
+
+        var config = options.config;
+        errorLevel=config[name].level;
+
         css.walkRules(function (rule) {
             var prefixesList = getPreList(rule);
 
@@ -62,7 +65,12 @@ function checkSort(list,result){
         var prop= l.prop;
         if(prop.length>len){
             var content = l.toString();
-            result.warn(msg,{node:l,level: errorLevel,content:content});
+            result.warn(msg,{
+                node:l,
+                level: errorLevel,
+                content:content,
+
+            });
         }else{
             len=prop.length;
         }
@@ -83,7 +91,12 @@ function colonSort(list,result){
             firstColonIndex=colonIndex;
         }else if(firstColonIndex!==colonIndex){
             var content = l.toString();
-            result.warn(msg,{node:l,level: errorLevel,content:content});
+            result.warn(msg,{
+                node:l,
+                level: errorLevel,
+                content:content,
+
+            });
         }
     }
     return false;

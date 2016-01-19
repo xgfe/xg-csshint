@@ -7,13 +7,14 @@ var csshint = require('../../src/parse');
 var utils = require('../../src/utils');
 var path = require('path');
 var getContent = utils.getContent;
-
+var options = {};
+ options.config = require('../../src/config');
 describe("unifying-font-family-case-sensitive", function () {
     beforeAll(function () {
         var cssPath = path.join(__dirname, 'css', 'unifying-font-family-case-sensitive.css');
         this.cssString = getContent(cssPath);
         this.cssPath = cssPath;
-        this.messages = csshint(this.cssString, cssPath);
+        this.messages = csshint(this.cssString, cssPath,options);
     });
 
     it('messages length should be 1',function(){
@@ -21,6 +22,6 @@ describe("unifying-font-family-case-sensitive", function () {
     });
 
     it('messages text should right',function(){
-       expect(this.messages[0].text).toEqual('`font-family` case insensitive, but in the same project, the same` Family Name` case must be unified. should replace `Arial`');
+       expect(this.messages[0].text).toEqual('`font-family` case insensitive, but in the same project, the same` Family Name` case must be unified. should replace `arial`');
     });
 });

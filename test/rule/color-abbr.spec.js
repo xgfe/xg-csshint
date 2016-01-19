@@ -7,13 +7,14 @@ var csshint = require('../../src/parse');
 var utils = require('../../src/utils');
 var path = require('path');
 var getContent = utils.getContent;
-
+var options = {};
+ options.config = require('../../src/config');
 describe("color-abbr", function () {
     beforeAll(function () {
         var cssPath = path.join(__dirname, 'css', 'color-abbr.css');
         this.cssString = getContent(cssPath);
         this.cssPath = cssPath;
-        this.messages = csshint(this.cssString, cssPath);
+        this.messages = csshint(this.cssString, cssPath,options);
     });
 
     it('message\'s length should be 1',function(){
@@ -24,9 +25,7 @@ describe("color-abbr", function () {
         expect(this.messages[0].text).toEqual('The color value can be abbreviated, must use abbreviations');
     })
 
-    it('error type',function(){
-        expect(this.messages[0].type).toEqual('error');
-    })
+
 
     it('right line&column',function(){
         var message = this.messages[0];

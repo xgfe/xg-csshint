@@ -6,12 +6,15 @@ var postcss = require('postcss');
 var utils = require('../utils');
 var name = 'unifying-font-family-case-sensitive';
 var msg = '`font-family` case insensitive, but in the same project, the same` Family Name` case must be unified.';
-var config = global.config;
-var errorLevel = config[name].level;
 
-module.exports = postcss.plugin(name, function (opt) {
-    global.fontFamilyPart = global.fontFamilyPart || {};
+module.exports = postcss.plugin(name, function (options) {
+
     return function (css, result) {
+
+        var config = options.config;
+        var errorLevel = config[name].level;
+        options.fontFamilyPart=options.fontFamilyPart || {};
+
         css.walkDecls(function (decl) {
             if (decl.prop === 'font-family') {
                 var parts = postcss.list.comma(decl.value);
@@ -19,23 +22,24 @@ module.exports = postcss.plugin(name, function (opt) {
                 for (var i = 0, part; part = parts[i++];) {
                     var lowerCasePart = part.toLowerCase();
 
-                    if (global.fontFamilyPart[lowerCasePart]) {
+                    if (options.fontFamilyPart[lowerCasePart]) {
                         //如果已经存在同样的font-family 检测是否字符串相等
-                        if (global.fontFamilyPart[lowerCasePart] !== part) {
+                        if (options.fontFamilyPart[lowerCasePart] !== part) {
                             var cssString = beforeString + decl.value.substring(0, decl.value.indexOf(part));
                             var position = utils.getLineAndColumn(cssString, decl.source.start);
                             var content = decl.toString();
-                            var errorMsg = msg + " should replace `" + global.fontFamilyPart[lowerCasePart] + "`";
+                            var errorMsg = msg + " should replace `" + options.fontFamilyPart[lowerCasePart] + "`";
                             result.warn(errorMsg, {
                                 node: decl,
                                 level: errorLevel,
                                 content: content,
                                 line: position.line,
-                                column: position.column
+                                column: position.column,
+
                             });
                         }
                     } else {
-                        global.fontFamilyPart[lowerCasePart] = part;
+                        options.fontFamilyPart[lowerCasePart] = part;
                     }
                 }
             }

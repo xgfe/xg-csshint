@@ -7,13 +7,14 @@ var csshint = require('../../src/parse');
 var utils = require('../../src/utils');
 var path = require('path');
 var getContent = utils.getContent;
-
+var options = {};
+ options.config = require('../../src/config');
 describe("font-weight-number", function () {
     beforeAll(function () {
         var cssPath = path.join(__dirname, 'css', 'font-weight-number.css');
         this.cssString = getContent(cssPath);
         this.cssPath = cssPath;
-        this.messages = csshint(this.cssString, cssPath);
+        this.messages = csshint(this.cssString, cssPath,options);
     });
 
     it('messages length should right',function(){

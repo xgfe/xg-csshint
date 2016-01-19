@@ -7,11 +7,13 @@ var postcss=require('postcss');
 var utils = require('../utils');
 var name='more-selector';
 var msg='Each selector must be exclusive';
-var config = global.config;
-var errorLevel=config[name].level;
 
-module.exports=postcss.plugin(name,function(opt){
+module.exports=postcss.plugin(name,function(options){
     return function(css,result){
+
+        var config = options.config;
+        var errorLevel=config[name].level;
+
 
         var newLineReg = /,(?!\n)/g
         css.walkRules(function(rule){
@@ -24,7 +26,14 @@ module.exports=postcss.plugin(name,function(opt){
                 var content = rule.selector.substring(0,  endIndex);
                 var position = utils.getLineAndColumn(cssString,rule.source.start);
 
-                result.warn(msg,{level: errorLevel,node:rule,content: content,line:position.line,column:position.column});
+                result.warn(msg,{
+                    level: errorLevel,
+                    node:rule,
+                    content: content,
+                    line:position.line,
+                    column:position.column,
+
+                });
 
             }
         })

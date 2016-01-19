@@ -4,11 +4,14 @@
 var postcss=require('postcss');
 var name='decl-end-of-semicolon';
 var msg='Attributes must end with a semicolon';
-var config = global.config;
-var errorLevel=config[name].level;
 
-module.exports=postcss.plugin(name,function(opt){
+module.exports=postcss.plugin(name,function(options){
     return function(css,result){
+
+        var config = options.config;
+        var errorLevel=config[name].level;
+
+
         css.walkRules(function(rule){
 
             //POSTCSS会将最后一行带有`;`的规则的raws.semicolon设置为true
@@ -22,7 +25,14 @@ module.exports=postcss.plugin(name,function(opt){
                 var content = lastDecl.toString();
                 var line = lastDecl.source.start.line;
                 var column = lastDecl.source.start.column + content.length;
-                result.warn(msg,{node:rule,level: errorLevel,content:content,line:line,column:column});
+                result.warn(msg,{
+                    node:rule,
+                    level: errorLevel,
+                    content:content,
+                    line:line,
+                    column:column,
+
+                });
             }
         });
     }

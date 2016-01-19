@@ -21,49 +21,53 @@ module.exports = function (args) {
         console.log("version:", package['version']);
         return;
     }
-
+    var config = {};
     //指定配置文件路径
     if (args[0] === '-p')
-        loadConfig(args[1]);
+        config = loadConfig(args[1]);
     else
-        loadConfig();
+        config = loadConfig();
 
     //指定单个文件
-    if(args[0] === '-f'){
-        parseFiles([args[1]]);
-    }else{
-        getFileList();
+    if (args[0] === '-f') {
+        parseFiles([args[1]],config);
+    } else {
+        getFileList(config);
     }
-
-
-
 
 }
 
-function parseFiles(files) {
+function parseFiles(files,config) {
     var messages = {};
+    var options={};
+    options.config=config;
     files.forEach(function (file) {
         var filePath = path.resolve(cwd, file);
         var cssContent = utils.getContent(filePath);
 
-        messages[file] = parse(cssContent, file);
+        messages[file] = parse(cssContent, file,options);
     });
-    var errorNumber=0;
-    var warningNumber=0;
+    var errorNumber = 0;
+    var warningNumber = 0;
     for (var file in messages) {
         if (messages.hasOwnProperty(file)) {
-
-            if(messages[file].length)    console.log(file);
+            if (messages[file].length)    console.log(file);
 
             messages[file].forEach(function (message) {
-                if(message.level == 1) errorNumber++;
-                else if(message.level == 2) warningNumber++;
+                if (message.level == 1) errorNumber++;
+                else if (message.level == 2) warningNumber++;
                 console.log(messagesToString(message));
             });
         }
     }
 
-    console.log('\n---errors:%d,warnings:%d---',errorNumber,warningNumber);
+    console.log('\n---errors:%d,warnings:%d---', errorNumber, warningNumber);
+    //process.exit() 1错误 0无错误
+    if (errorNumber) {
+        process.exit(1);
+    } else {
+        process.exit(0);
+    }
 }
 /**
  * 格式化message对象，提供给console输出
@@ -74,17 +78,15 @@ function messagesToString(message) {
     var text = chalk.gray("'" + message.text + "'");
     var line = message.line;
     var column = message.column;
-    var content =chalk.magenta( message.content );
+    var content = chalk.magenta(message.content);
     if (level == '1') {
         var type = chalk.bgRed("ERROR");
         type = chalk.white(type);
     }
-
-    return type + " Line:" + line + ", Colum:" + column + " "+content+" "+ text;
+    return type + " Line:" + line + ", Colum:" + column + " " + content + " " + text;
 }
 
-function getFileList() {
-    var config = global.config;
+function getFileList(config) {
     var files = config['files'];
     var ignore = config['ignore'];
 
@@ -100,7 +102,7 @@ function getFileList() {
         if (err) {
             console.log(err);
         } else {
-            parseFiles(matchs);
+            parseFiles(matchs,config);
         }
     })
 }
@@ -108,22 +110,23 @@ function getFileList() {
  * 加载config
  * @param userPath
  */
-function loadConfig(userPath){
+function loadConfig(userPath) {
 
     //加载配置文件，读取文件规则和忽略规则
     var configPath
-    if(userPath)
-        configPath = path.resolve(cwd,userPath);
+    if (userPath)
+        configPath = path.resolve(cwd, userPath);
     else
         configPath = path.join(cwd, "xg-csshint.json");//默认配置文件
 
     var defaultConfig = require("./config");
-    if(fs.existsSync(configPath))
+    if (fs.existsSync(configPath))
         var config = require(configPath);
     else
-        var config={};
+        var config = {};
 
     //将用户配置和默认配置合并，用户的配置优先级高
-    config=utils.merage(defaultConfig,config);
-    global.config=config;//每个规则都需要，用传递的话太麻烦了
+    config = utils.merage(defaultConfig, config);
+    //global.config=config;//每个规则都需要，用传递的话太麻烦了
+    return config;
 }

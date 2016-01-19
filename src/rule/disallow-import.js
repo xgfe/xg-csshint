@@ -5,16 +5,24 @@
 var postcss = require('postcss');
 var name = 'disallow-import';
 var msg = 'Do not use the import';
-var config = global.config;
-var errorLevel=config[name].level;
 
-module.exports = postcss.plugin(name, function (opt) {
+
+module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
+
+        var config = options.config;
+        var errorLevel=config[name].level;
+
         css.walkAtRules(function(atr){
 
             if(atr.name == 'import'){
                 var content = atr.toString();
-                result.warn(msg,{level: errorLevel,node:atr,content:content});
+                //默认的line,cloumn足够了
+                result.warn(msg,{
+                    level: errorLevel,
+                    node:atr,
+                    content:content
+                });
             }
         });
     }

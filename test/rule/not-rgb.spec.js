@@ -7,13 +7,14 @@ var csshint = require('../../src/parse');
 var utils=require('../../src/utils');
 var path=require('path');
 var getContent = utils.getContent;
-
+var options = {};
+ options.config = require('../../src/config');
 describe("hex-color", function () {
     beforeAll(function(){
         var cssPath=path.join(__dirname,'css','hex-color.css');
         this.cssString=getContent(cssPath);
         this.cssPath=cssPath;
-        this.messages=csshint(this.cssString,cssPath);
+        this.messages=csshint(this.cssString,cssPath,options);
     });
 
     it("message's length should 1",function(){
@@ -24,8 +25,5 @@ describe("hex-color", function () {
         expect(this.messages[0].text).toEqual("Color values must use hex,such as `#eee`");
     });
 
-    it('error type',function(){
-        expect(this.messages[0].type).toEqual("error");
-    })
 
 });

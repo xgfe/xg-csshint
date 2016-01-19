@@ -6,11 +6,12 @@ var postcss = require('postcss');
 var utils = require("../utils");
 var name = 'media-query-require-new-line';
 var msg = 'each query conditions for one line';
-var config = global.config;
-var errorLevel = config[name].level;
 
-module.exports = postcss.plugin(name, function (opt) {
+module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
+
+        var config = options.config;
+        var errorLevel = config[name].level;
 
         var notNewline = /,(?!\s*[\n\r])/g; //判断,后面没有换行符
 
@@ -33,7 +34,8 @@ module.exports = postcss.plugin(name, function (opt) {
                         level: errorLevel,
                         content: content,
                         line: position.line,
-                        column: position.column
+                        column: position.column,
+
                     });
                 }
 

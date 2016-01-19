@@ -6,11 +6,13 @@ var postcss = require('postcss');
 var utils = require('../utils');
 var name = 'font-weight-number';
 var msg = 'font-weight attribute must be number';
-var config = global.config;
-var errorLevel = config[name].level;
 
-module.exports = postcss.plugin(name, function (opt) {
+module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
+
+        var config = options.config;
+        var errorLevel = config[name].level;
+
 
         css.walkDecls(function (decl) {
             if (decl.prop === 'font-weight' && isNaN(decl.value)) {
@@ -23,7 +25,8 @@ module.exports = postcss.plugin(name, function (opt) {
                     level: errorLevel,
                     content: content,
                     line: position.line,
-                    column: position.column
+                    column: position.column,
+
                 });
             }
         });
