@@ -177,6 +177,11 @@ var config = {
     "selector-nested":{
         level:2,
         hierarchy:3, //不大于几层
+    },
+
+    //[建议] 尽量少用 * 选择器
+    "not-use-asterisk":{
+        level:2
     }
 }
 
