@@ -182,6 +182,11 @@ var config = {
     //[建议] 尽量少用 * 选择器
     "not-use-asterisk":{
         level:2
+    },
+
+    // 尽量不使用 !important 声明
+    "not-use-important":{
+        level:2
     }
 }
 

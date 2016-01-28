@@ -10,19 +10,19 @@ describe('important', function () {
     it('before must one space', function () {
         var cssString = 'html {\n    font-size: 14px !important;\n}';
         var messages = csshint(cssString,null,options);
-        expect(messages.length).toBe(0);
+        expect(messages.length).toBe(1);
     });
 
     it('before tab', function () {
         var cssString = 'html {\n    font-size: 14px\t!important;\n}';
         var messages = csshint(cssString,null,options);
-        expect(messages.length).toBe(1);
+        expect(messages.length).toBe(2);
     });
 
     it('before two space',function(){
         var cssString = 'html {\n    font-size: 14px  !important;\n}';
         var messages = csshint(cssString,null,options);
-        expect(messages.length).toBe(1);
+        expect(messages.length).toBe(2);
     });
 
     it('error msg',function(){
