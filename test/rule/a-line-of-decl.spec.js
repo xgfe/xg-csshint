@@ -19,7 +19,7 @@ describe('a-line-of-decl', function () {
     it('attribute one line',function(){
         var cssString = "html {\n    font-size: 14px;    color: #000;\n}";
         var messages=csshint(cssString,null,options);
-        console.log(messages)
+
         expect(messages.length).toBe(2);
     });
 

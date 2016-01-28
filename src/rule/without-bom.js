@@ -16,15 +16,15 @@ module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
 
         var config = options.config;
-        errorLevel=config[name].level;
+        errorLevel = config[name].level;
         var fileBuffer = new Buffer(options.fileOriginalContent);
-        if(fileBuffer[0].toString(16)=='ef' && fileBuffer[1].toString(16)=='bb' && fileBuffer[2].toString(16)=='bf'){
-            result.warn(msg,{
-                node:"",
-                level:errorLevel,
-                line:1,
-                column:1,
-                content:"",
+        if (fileBuffer[0].toString(16) == 'ef' && fileBuffer[1].toString(16) == 'bb' && fileBuffer[2].toString(16) == 'bf') {
+            result.warn(msg, {
+                node: "",
+                level: errorLevel,
+                line: 1,
+                column: 1,
+                content: "",
             });
         }
 
