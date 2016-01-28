@@ -188,8 +188,12 @@ var config = {
     "not-use-important": {
         level: 2
     },
-
+    // 颜色值在同一个项目中不要又有大写又有小写
     "color-case": {
+        level: 2
+    },
+
+    "normal-fontStyle": {
         level: 2
     }
 }

@@ -1,0 +1,11 @@
+a {
+    font-style: normal;
+}
+
+div {
+    font-style: inherit;
+}
+
+input {
+    font-style: italic;
+}
