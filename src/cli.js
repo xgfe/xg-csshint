@@ -82,6 +82,9 @@ function messagesToString(message) {
     if (level == '1') {
         var type = chalk.bgRed("ERROR");
         type = chalk.white(type);
+    }else if(level == '2'){
+        var type = chalk.bgBlue("WARNING");
+        type = chalk.white(type);
     }
     return type + " Line:" + line + ", Colum:" + column + " " + content + " " + text;
 }
