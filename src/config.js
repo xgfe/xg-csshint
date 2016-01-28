@@ -192,8 +192,13 @@ var config = {
     "color-case": {
         level: 2
     },
-
+    // 需要在 Windows 平台显示的中文内容，不要使用除 normal 外的 font-style。其他平台也应慎用
     "normal-fontStyle": {
+        level: 2
+    },
+
+    //line-height 在定义文本段落时，应使用数值
+    "line-height": {
         level: 2
     }
 }
