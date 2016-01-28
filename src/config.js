@@ -171,6 +171,12 @@ var config = {
     // [建议] 尽量不使用id选择器定义样式
     "not-use-id":{
         level:2
+    },
+
+    // [建议] 选择器的嵌套层级应不大于 3 级，位置靠后的限定条件应尽可能精确。
+    "selector-nested":{
+        level:2,
+        hierarchy:3, //不大于几层
     }
 }
 

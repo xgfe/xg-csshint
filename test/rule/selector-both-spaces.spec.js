@@ -9,6 +9,7 @@ describe('selector-both-spaces',function(){
     it('On both sides of the selector Spaces',function(){
         var cssString="p + p,\np > p,\np ~ p {\n    background: #000;\n}";
         var messages=csshint(cssString,null,options);
+        console.log(messages);
         expect(messages.length).toBe(0);
     })
 
