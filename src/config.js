@@ -157,6 +157,11 @@ var config = {
     // [强制] 带私有前缀的属性由长到短排列，按冒号位置对齐，标准属性放在最后。
     "vendor-prefixes-sort": {
         level: 1
+    },
+
+    // [建议] CSS 文件使用无 BOM 的 UTF-8 编码。
+    "without-bom":{
+        level: 2
     }
 
 }

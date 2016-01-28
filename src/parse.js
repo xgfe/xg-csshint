@@ -14,6 +14,7 @@ var utils=require('./utils')
  */
 function parse(content,path,options) {
     content=utils.contentFormat(content);
+    options.fileOriginalContent=content;//postcss会将bom头滤掉，所以通过参数把原始内容传入提供判断是否含有bom
     var plugins = getPlugins(options);
     var processor=postcss(plugins);
     var lazy=processor.process(content,{from:path});
@@ -22,7 +23,7 @@ function parse(content,path,options) {
         console.log(err.stack);
     });
     //返回警告信息
-    // TODO 警告信息里面加入位置和错误文字截取
+    // done 警告信息里面加入位置和错误文字截取
 
     return lazy.result.messages;
 }
@@ -34,7 +35,6 @@ function getPlugins(options) {
 
     for (var i = 0, file; file = files[i++];) {
         var pluginPath='./rule/'+file;
-
         var pluginFn=require(pluginPath);
         plugins.push(pluginFn(options));
     }
@@ -44,9 +44,12 @@ function getPlugins(options) {
 }
 
 
-//var cssString="article {\n    quotes: '\"' '\"';\n}";
 
-//var cssString=utils.getContent(path.resolve("../test/rule/css/unifying-font-family-case-sensitive.css"));
-//parse(cssString,path.resolve('../test/rule/css/bom3.css'))
+var cssString = "html {\n    font-size: 14px;    color: #000;\n}";
+//var cssString=utils.getContent(path.resolve("../test/rule/css/without-bom.css"));
+var options={};
+options.config = require("./config");
+
+parse(cssString,path.resolve('../test/rule/css/bom3.css'),options)
 
 module.exports = parse;

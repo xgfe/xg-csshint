@@ -26,7 +26,6 @@ module.exports=postcss.plugin(name,function(options){
                     node:decl,
                     level:errorLevel,
                     content:cssString,
-
                 });
 
             }

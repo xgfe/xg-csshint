@@ -13,12 +13,13 @@ describe('a-line-of-decl', function () {
         var cssString = "html {\n    font-size: 14px;\r    color: #000;\r\n    margin: 0;}";
         var messages=csshint(cssString,null,options);
 
-        expect(messages.length).toBe(1);
+        expect(messages.length).toBe(0);
     });
 
     it('attribute one line',function(){
         var cssString = "html {\n    font-size: 14px;    color: #000;\n}";
         var messages=csshint(cssString,null,options);
+        console.log(messages)
         expect(messages.length).toBe(2);
     });
 
