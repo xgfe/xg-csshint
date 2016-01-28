@@ -162,8 +162,12 @@ var config = {
     // [建议] CSS 文件使用无 BOM 的 UTF-8 编码。
     "without-bom":{
         level: 2
-    }
+    },
 
+    //建议] 如无必要，不得为 id、class 选择器添加类型选择器进行限定
+    "disallow-overqualified-elements":{
+        level: 2
+    }
 }
 
 module.exports = config;

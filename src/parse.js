@@ -50,6 +50,6 @@ var cssString = "html {\n    font-size: 14px;    color: #000;\n}";
 var options={};
 options.config = require("./config");
 
-parse(cssString,path.resolve('../test/rule/css/bom3.css'),options)
+//parse(cssString,path.resolve('../test/rule/css/bom3.css'),options)
 
 module.exports = parse;

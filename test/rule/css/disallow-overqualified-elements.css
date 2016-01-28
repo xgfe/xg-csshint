@@ -1,0 +1,18 @@
+a#my {
+    font-size: 16px;
+}
+
+p div#bad {
+    background: #eee;
+}
+#bag a.target span {
+    color: #fff;
+}
+
+.good-class #tag.bad {
+    color: #eee;
+}
+
+.good_class.bad {
+    color: #eee;
+}

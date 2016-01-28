@@ -44,7 +44,6 @@ function dealRules(atRules, rule, result) {
                     node: decl,
                     level: errorLevel,
                     content: content,
-
                 });
             }
         });
