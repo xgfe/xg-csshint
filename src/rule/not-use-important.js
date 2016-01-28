@@ -14,7 +14,7 @@ module.exports = postcss.plugin(name, function (options) {
         var errorLevel = config[name].level;
         css.walkDecls(function(decl){
             if(decl.important){
-                var content = decl.prop+" !important";
+                var content = decl.prop+": "+decl.value+" !important";
                 result.warn(msg,{
                     level: errorLevel,
                     node:decl,

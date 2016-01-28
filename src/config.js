@@ -146,7 +146,7 @@ var config = {
     // [强制] 使用 4 个空格做为一个缩进层级，不允许使用 2 个空格 或 tab 字符。
     "text-indent": {
         level: 1,
-        textIndent:"    ",//缩进4个空格
+        textIndent: "    ",//缩进4个空格
     },
 
     // [强制] font-family 不区分大小写，但在同一个项目中，同样的 Family Name 大小写必须统一。
@@ -160,33 +160,37 @@ var config = {
     },
 
     // [建议] CSS 文件使用无 BOM 的 UTF-8 编码。
-    "without-bom":{
+    "without-bom": {
         level: 2
     },
 
     //建议] 如无必要，不得为 id、class 选择器添加类型选择器进行限定
-    "disallow-overqualified-elements":{
+    "disallow-overqualified-elements": {
         level: 2
     },
     // [建议] 尽量不使用id选择器定义样式
-    "not-use-id":{
-        level:2
+    "not-use-id": {
+        level: 2
     },
 
     // [建议] 选择器的嵌套层级应不大于 3 级，位置靠后的限定条件应尽可能精确。
-    "selector-nested":{
-        level:2,
-        hierarchy:3, //不大于几层
+    "selector-nested": {
+        level: 2,
+        hierarchy: 3, //不大于几层
     },
 
     //[建议] 尽量少用 * 选择器
-    "not-use-asterisk":{
-        level:2
+    "not-use-asterisk": {
+        level: 2
     },
 
     // 尽量不使用 !important 声明
-    "not-use-important":{
-        level:2
+    "not-use-important": {
+        level: 2
+    },
+
+    "color-case": {
+        level: 2
     }
 }
 
