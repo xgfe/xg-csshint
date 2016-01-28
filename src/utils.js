@@ -10,7 +10,7 @@ exports.getContent=function(path){
 
 
 exports.contentFormat=function(content){
-    return content.replace(/[\r\n]|\r\n/g,'\n');
+    return content.replace(/\r\n|[\r\n]/g,'\n');
 }
 
 /**

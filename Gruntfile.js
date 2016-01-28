@@ -3,7 +3,7 @@ module.exports=function(grunt){
 
     grunt.initConfig({
         watch:{
-            files:['src/**/*.js','test/**/*.spec.js'],
+            files:['src/**/*.js','test/**/*.spec.js',"test/rule/css/*.css"],
             options:{
                 event:['changed']
             }
