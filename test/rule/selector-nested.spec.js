@@ -1,5 +1,5 @@
 /**
- *  [建议] 尽量不使用id选择器定义样式
+ *  [建议] 选择器的嵌套层级应不大于 3 级，位置靠后的限定条件应尽可能精确。
  */
 'use strict';
 
@@ -10,9 +10,9 @@ var getContent = utils.getContent;
 var options = {};
 options.config = require('../../src/config');
 
-describe("not-use-id", function () {
+describe("selector-nested", function () {
     beforeAll(function () {
-        var cssPath = path.join(__dirname, 'css', "not-use-id.css");
+        var cssPath = path.join(__dirname, 'css', "selector-nested.css");
         this.cssString = getContent(cssPath);
         this.cssPath = cssPath;
         this.messages = csshint(this.cssString, cssPath, options);
@@ -23,6 +23,6 @@ describe("not-use-id", function () {
     });
 
     it('messages text should be right', function () {
-        expect(this.messages[0].text).toEqual("Do not use the id selector");
+        expect(this.messages[0].text).toEqual("The selector nested hierarchy is not greater than 3");
     })
 });

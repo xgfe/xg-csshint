@@ -1,0 +1,10 @@
+/* good */
+.username input {}
+.comment > .avatar + input,
+a {}
+
+/* bad */
+input,
+.page .header .login .username input {
+
+}
