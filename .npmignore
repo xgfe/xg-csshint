@@ -2,3 +2,4 @@ node_modules
 test
 jasmine.json
 xg-csshint.json
+doc/
