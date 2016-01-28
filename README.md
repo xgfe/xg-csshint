@@ -53,3 +53,5 @@ fs.readFile('./disallow-import.css',function(err,res){
  plugin //规则名称
 }]
 ```
+## ChangeLog
+[changelog](https://github.com/xgfe/xg-csshint/blob/master/ChangeLog.md)
