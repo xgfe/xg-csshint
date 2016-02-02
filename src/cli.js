@@ -28,9 +28,19 @@ module.exports = function (args) {
     else
         config = loadConfig();
 
-    //指定单个文件
+    //指定单个文件或者目录
     if (args[0] === '-f') {
-        parseFiles([args[1]],config);
+        var filePath = args[1];
+        if(fs.statSync(filePath).isDirectory()){
+            var cliConfig = {
+                files:path.join(filePath,"/**/*.css")
+            }
+            config = utils.merage(config,cliConfig);
+
+            getFileList(config);
+        }else{
+            parseFiles([args[1]],config);
+        }
     } else {
         getFileList(config);
     }
@@ -41,12 +51,14 @@ function parseFiles(files,config) {
     var messages = {};
     var options={};
     options.config=config;
-    files.forEach(function (file) {
+    files.forEach(function (file,idx) {
         var filePath = path.resolve(cwd, file);
+
         var cssContent = utils.getContent(filePath);
 
         messages[file] = parse(cssContent, file,options);
     });
+
     var errorNumber = 0;
     var warningNumber = 0;
     for (var file in messages) {
@@ -102,6 +114,7 @@ function getFileList(config) {
     ignore = "{" + ignore.join(',') + ",}";
 
     glob(files, {mark: true, cwd: cwd, ignore: ignore}, function (err, matchs) {
+
         if (err) {
             console.log(err);
         } else {
@@ -130,6 +143,6 @@ function loadConfig(userPath) {
 
     //将用户配置和默认配置合并，用户的配置优先级高
     config = utils.merage(defaultConfig, config);
-    //global.config=config;//每个规则都需要，用传递的话太麻烦了
+
     return config;
 }

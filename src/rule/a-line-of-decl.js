@@ -22,6 +22,7 @@ module.exports=postcss.plugin(name,function(options){
             if(!isNewLine.test(before)){
 
                 var cssString = decl.toString();
+                console.log(cssString);
                 result.warn(msg,{
                     node:decl,
                     level:errorLevel,
