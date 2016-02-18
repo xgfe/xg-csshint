@@ -6,7 +6,7 @@
 
 
 
-在项目目录下创建一个xg-csshint.json,`files`指定需要检测的文件,`ignore`指定忽略内容.具体设置可以参照[glob语法](https://github.com/isaacs/node-glob)
+在项目目录下创建一个.csshintrc,`files`指定需要检测的文件,`ignore`指定忽略内容.具体设置可以参照[glob语法](https://github.com/isaacs/node-glob)
 
 ```
 {

@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## 0.3.2
+
+- 修改规则文件为.csshintrc
+
 ## 0.3.0
 - 加入警告规则
 - 部分警告规则无法实现，查看未实现列表[doc](https://github.com/xgfe/xg-csshint/blob/master/doc/doc.md)
