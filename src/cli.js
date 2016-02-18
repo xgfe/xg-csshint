@@ -28,6 +28,9 @@ module.exports = function (args) {
     else
         config = loadConfig();
 
+    //获取配置文件失败
+    if(!config) return;
+
     //指定单个文件或者目录
     if (args[0] === '-f') {
         var filePath = args[1];
@@ -133,13 +136,23 @@ function loadConfig(userPath) {
     if (userPath)
         configPath = path.resolve(cwd, userPath);
     else
-        configPath = path.join(cwd, "xg-csshint.json");//默认配置文件
+        configPath = path.join(cwd, ".csshintrc");//默认配置文件
 
     var defaultConfig = require("./config");
-    if (fs.existsSync(configPath))
-        var config = require(configPath);
+    if (fs.existsSync(configPath)){
+        //var config = require(configPath);
+        var config = fs.readFileSync(configPath).toString();
+        try{
+            config = JSON.parse(config);
+        }catch(e){
+            console.error("config can't parse to json!\n", e.message);
+
+            return false;
+        }
+    }
     else
         var config = {};
+
 
     //将用户配置和默认配置合并，用户的配置优先级高
     config = utils.merage(defaultConfig, config);
