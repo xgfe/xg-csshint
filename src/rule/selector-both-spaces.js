@@ -15,6 +15,7 @@ module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
         var config = options.config;
         var errorLevel = config[name].level;
+		if(errorLevel===0) return;
         var afterSelector = config[name].afterSelector;
         var beforeSelector = config[name].beforeSelector;
 

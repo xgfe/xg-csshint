@@ -13,6 +13,7 @@ module.exports = postcss.plugin(name, function (options) {
 
         var config = options.config;
         var errorLevel = config[name].level;
+		if(errorLevel===0) return;
 
 
         var notOmitUnit = /\b0[a-zA-Z]+?\b/g;//找出0px,0rem,0xxx

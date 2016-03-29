@@ -14,6 +14,7 @@ module.exports=postcss.plugin(name,function(options){
 
         var config = options.config;
         var errorLevel=config[name].level;
+		if(errorLevel===0) return;
 
 
         var followedComma = config[name].followedComma; //`,`后面跟随比较的内容

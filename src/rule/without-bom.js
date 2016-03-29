@@ -17,6 +17,7 @@ module.exports = postcss.plugin(name, function (options) {
 
         var config = options.config;
         errorLevel = config[name].level;
+        if(errorLevel===0) return;
         var fileBuffer = new Buffer(options.fileOriginalContent);
         if (fileBuffer[0].toString(16) == 'ef' && fileBuffer[1].toString(16) == 'bb' && fileBuffer[2].toString(16) == 'bf') {
             result.warn(msg, {

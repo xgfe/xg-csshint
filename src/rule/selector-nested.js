@@ -12,6 +12,7 @@ module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
         var config = options.config;
         var errorLevel = config[name].level;
+		if(errorLevel===0) return;
         var hierarchy = config[name].hierarchy;
         css.walkRules(function (rule) {
             var selectorList = rule.selector.split(","); // ，代表另一个选择器嵌套，重新计算嵌套层数

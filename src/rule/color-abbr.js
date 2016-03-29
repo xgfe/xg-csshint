@@ -11,6 +11,7 @@ module.exports = postcss.plugin(name, function (options) {
 
         var config = options.config;
         var errorLevel=config[name].level;
+		if(errorLevel===0) return;
 
 
         var canAbbreviated=/#([a-zA-Z0-9])\1([a-zA-Z0-9])\2([a-zA-Z0-9])\3/; //匹配#eeFF88之类的可以缩写颜色值

@@ -16,6 +16,7 @@ module.exports = postcss.plugin(name, function (options) {
 
         var config = options.config;
         errorLevel = config[name].level;
+        if(errorLevel===0) return;
         textIndent = config[name].textIndent;//缩进字符
 
         css.walkRules(function (rule) {

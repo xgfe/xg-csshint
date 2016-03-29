@@ -13,6 +13,9 @@ module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
         var config = options.config;
         var errorLevel = config[name].level;
+
+        if(errorLevel===0) return;
+
         //注意，这里的正则可以拿到 .good.bad的情况，需要特殊判断
         var overqualifiedReg = /[\.#]?[\w\-_]+?(?=[\.#])/g;
         css.walkRules(function(rule){

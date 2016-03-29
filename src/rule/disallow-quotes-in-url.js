@@ -13,6 +13,7 @@ module.exports = postcss.plugin(name, function (options) {
         var config = options.config;
         var errorLevel = config[name].level;
 
+        if(errorLevel===0) return;
 
         var getUrlValue = /\burl\(['"][\s\S]+?['"]\)/g;//提取url('xxxx') url("xxx")
         css.walkDecls(function (decl) {

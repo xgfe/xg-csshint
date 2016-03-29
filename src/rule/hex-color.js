@@ -12,7 +12,7 @@ module.exports = postcss.plugin(name, function (options) {
 
         var config = options.config;
         var errorLevel = config[name].level;
-
+        if(errorLevel===0) return;
 
         var isRgb = /\brgb\(|\bhsl\(/g; //判断值里面有没有 rgb( hsl(
         css.walkDecls(function (decl) {
