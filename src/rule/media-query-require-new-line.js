@@ -12,6 +12,7 @@ module.exports = postcss.plugin(name, function (options) {
 
         var config = options.config;
         var errorLevel = config[name].level;
+		if(errorLevel===0) return;
 
         var notNewline = /,(?!\s*[\n\r])/g; //判断,后面没有换行符
 

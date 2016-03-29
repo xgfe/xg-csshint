@@ -12,6 +12,9 @@ module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
         var config = options.config;
         var errorLevel = config[name].level;
+
+        if(errorLevel===0) return;
+
         var colorReg = /#(\w+)/g; //提取color字符串
         var uppercaseReg = /[A-Z]/; //大写
         var lowercaseReg = /[a-z]/;//小写

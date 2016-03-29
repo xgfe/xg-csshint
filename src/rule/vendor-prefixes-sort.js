@@ -12,7 +12,7 @@ module.exports = postcss.plugin(name, function (options) {
 
         var config = options.config;
         errorLevel=config[name].level;
-
+        if(errorLevel===0) return;
         css.walkRules(function (rule) {
             var prefixesList = getPreList(rule);
 

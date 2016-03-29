@@ -13,6 +13,7 @@ module.exports = postcss.plugin(name, function (options) {
 
         var config = options.config;
         var errorLevel = config[name].level;
+		if(errorLevel===0) return;
         options.fontFamilyPart=options.fontFamilyPart || {};
 
         css.walkDecls(function (decl) {

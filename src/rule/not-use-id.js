@@ -12,6 +12,7 @@ module.exports = postcss.plugin(name, function (options) {
     return function (css, result) {
         var config = options.config;
         var errorLevel = config[name].level;
+		if(errorLevel===0) return;
         var idSelectorReg = /#[\w\-_]+/g
         css.walkRules(function(rule){
             var selector = rule.selector;
