@@ -1,6 +1,6 @@
 # xg-csslint
 
-支持规范:[xgfe-css规范](https://github.com/xgfe/codeguide/blob/master/css.md)中的[强制]部分,[建议]部分稍后添加
+支持规范:[xgfe-css规范](https://github.com/xgfe/codeguide/blob/master/css.md)
 
 ## 使用方法
 
