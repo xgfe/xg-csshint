@@ -9,7 +9,7 @@ var name='a-line-of-decl';
 var msg='Attribute must be a new line';
 
 module.exports=postcss.plugin(name,function(options){
-
+    
     return function(css,result){
 
         var config = options.config;

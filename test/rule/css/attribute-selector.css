@@ -2,3 +2,7 @@ html,
  div[name='LY'] {
 
 }
+
+.datepickerInput[disabled] {
+    background-color: #fff;
+}

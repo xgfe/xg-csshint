@@ -45,11 +45,27 @@ function getPlugins(options) {
 
 
 
-var cssString = "html {\n    font-size: 14px;    color: #000;\n}";
+/*var cssString = `@media screen and (max-width: 1200px) {
+    .table-scroll {
+        width: 100%;
+        margin-bottom: 15px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        border: 1px solid #ddd;
+        border-top: 0;
+    }
+
+    .table-scroll > .table {
+        margin-bottom: 0;
+        min-width: 1100px;
+    }
+}`;
 //var cssString=utils.getContent(path.resolve("../test/rule/css/without-bom.css"));
 var options={};
 options.config = require("./config");
 
-//parse(cssString,path.resolve('../test/rule/css/bom3.css'),options)
+parse(cssString,path.resolve('../test/rule/css/bom3.css'),options)*/
 
 module.exports = parse;

@@ -59,7 +59,8 @@ function dealRules(atRules, rule, result) {
                 for (var i = 0; i < index; i++) {
                     textIndentStr += textIndent;
                 }
-                if (beforeStr !== '\n' + textIndentStr) {
+                var textIndentReg = new RegExp('\n'+textIndentStr+'$');
+                if (!textIndentReg.test(beforeStr)) {
                     var content = atr.raws.before.replace(/\n/, "") + "@" + atr.name + atr.raws.between + atr.params;
                     result.warn(msg, {
                         node: atr,
@@ -79,8 +80,8 @@ function dealRules(atRules, rule, result) {
                 for (var i = 0; i < index; i++) {
                     textIndentStr += textIndent;
                 }
-
-                if (beforeStr !== '\n' + textIndentStr) {
+                var textIndentReg = new RegExp('\n'+textIndentStr+'$');
+                if (!textIndentReg.test(beforeStr)) {
                     var content = rule.raws.before.replace(/\n/, "") + rule.selector;
                     result.warn(msg, {
                         node: rule,
@@ -97,7 +98,8 @@ function dealRules(atRules, rule, result) {
                     for (var i = 0; i < index; i++) {
                         textIndentStr += textIndent;
                     }
-                    if (beforeStr !== '\n' + textIndentStr) {
+                    var textIndentReg = new RegExp('\n'+textIndentStr+'$');
+                    if (!textIndentReg.test(beforeStr)) {
                         var content = decl.raws.before.replace(/\n/, "") + decl.toString();
                         result.warn(msg, {
                             node: decl,
